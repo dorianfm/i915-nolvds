@@ -5,6 +5,10 @@ It's really simple, instead of rebuilding your kernel every time there's an upda
 
 There's two ways you can install this, DKMS or just plain make. To use dkms, you must have it installed.
 
+## X220 Specific Fork
+
+I created this fork from alexdelifer/i915-nolvds as I needed to update the product IDs to work with my X220, and to fix the makefile to work with Kernel V5.0
+
 ### DKMS
 
 ```
