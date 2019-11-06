@@ -7,10 +7,11 @@ ifeq ($(KVER),)
 KVER := "$(shell uname -r)"
 endif
 
-#CKERNEL := "/usr/lib/modules/$(shell uname -r)"
-CKERNEL := "/usr/lib/modules/$(KVER)"
+#CKERNEL := "/lib/modules/$(shell uname -r)"
+CKERNEL := "/lib/modules/$(KVER)"
 #CKERNELVERSION := $(shell uname -r | cut -d- -f1)
-CKERNELVERSION := $(shell echo $(KVER) | cut -d- -f1)
+CKERNELVERSION := $(shell echo $(KVER) | cut -d- -f1 )
+CKERNELVERSION = 5.3
 # 4.14.8
 LOCALKERNEL := $(shell pwd)/linux-$(CKERNELVERSION)
 # ./linux-4.14.8
