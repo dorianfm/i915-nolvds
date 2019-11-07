@@ -11,7 +11,7 @@ endif
 CKERNEL := "/lib/modules/$(KVER)"
 #CKERNELVERSION := $(shell uname -r | cut -d- -f1)
 CKERNELVERSION := $(shell echo $(KVER) | cut -d- -f1 )
-CKERNELVERSION = 5.3
+CKERNELVERSION = 5.0
 # 4.14.8
 LOCALKERNEL := $(shell pwd)/linux-$(CKERNELVERSION)
 # ./linux-4.14.8
