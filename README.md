@@ -9,6 +9,15 @@ There's two ways you can install this, DKMS or just plain make. To use dkms, you
 
 I created this fork from [alexdelifer/i915-nolvds](https://github.com/alexdelifer/i915-nolvds) as I needed to update the product IDs to work with my X220, and to fix the makefile to work with Kernel V5.0
 
+## Product IDs
+
+In patches/i915-no-lvds-multi.patch the original `DMI_PRODUCT_NAME` was `4290FP2`, I've updated this to match my laptop's product id which is `4291T25` - you may need to change this to fit your device. I found this ID via the following:
+
+```
+$ dmesg | grep ThinkPad | grep model
+[    4.431800] thinkpad_acpi: Lenovo ThinkPad X220, model 4291T25
+```
+
 ### DKMS
 
 ```
