@@ -1,0 +1,73 @@
+diff --git a/drivers/gpu/drm/i915/display/intel_dp.c b/drivers/gpu/drm/i915/display/intel_dp.c
+index d0fc34826..4d0e6011d 100644
+--- a/drivers/gpu/drm/i915/display/intel_dp.c
++++ b/drivers/gpu/drm/i915/display/intel_dp.c
+@@ -146,7 +146,7 @@ bool intel_dp_is_edp(struct intel_dp *intel_dp)
+ {
+ 	struct intel_digital_port *intel_dig_port = dp_to_dig_port(intel_dp);
+ 
+-	return intel_dig_port->base.type == INTEL_OUTPUT_EDP;
++	return intel_dig_port->base.type == INTEL_OUTPUT_EDP || strncmp(intel_dp->attached_connector->base.name, "DP-3", 4) == 0;
+ }
+ 
+ static struct intel_dp *intel_attached_dp(struct drm_connector *connector)
+@@ -6518,7 +6518,7 @@ bool intel_dp_is_port_edp(struct drm_i915_private *dev_priv, enum port port)
+ 	if (INTEL_GEN(dev_priv) < 5)
+ 		return false;
+ 
+-	if (INTEL_GEN(dev_priv) < 9 && port == PORT_A)
++	if (INTEL_GEN(dev_priv) < 9 && port == PORT_D)
+ 		return true;
+ 
+ 	return intel_bios_is_port_edp(dev_priv, port);
+diff --git a/drivers/gpu/drm/i915/display/intel_lvds.c b/drivers/gpu/drm/i915/display/intel_lvds.c
+index efefed62a..9159a595a 100644
+--- a/drivers/gpu/drm/i915/display/intel_lvds.c
++++ b/drivers/gpu/drm/i915/display/intel_lvds.c
+@@ -514,6 +514,22 @@ static const struct dmi_system_id intel_no_lvds[] = {
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "Macmini1,1"),
+ 		},
+ 	},
++	{
++		.callback = intel_no_lvds_dmi_callback,
++		.ident = "Lenovo ThinkPad X220 moded with nitrocaster FHD Board",
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "LENOVO"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "4291T25"),
++		},
++	},
++	{
++		.callback = intel_no_lvds_dmi_callback,
++		.ident = "Lenovo Thinkpad X230 moded with nitrocaster FHD Board",
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "LENOVO"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "2324B14"),
++		},
++	},
+ 	{
+ 		.callback = intel_no_lvds_dmi_callback,
+ 		.ident = "Apple Mac Mini (Core 2 series)",
+diff --git a/drivers/gpu/drm/i915/gvt/trace.h b/drivers/gpu/drm/i915/gvt/trace.h
+index 6d787750d..94ed957f1 100644
+--- a/drivers/gpu/drm/i915/gvt/trace.h
++++ b/drivers/gpu/drm/i915/gvt/trace.h
+@@ -377,7 +377,7 @@ TRACE_EVENT(render_mmio,
+ 
+ /* This part must be out of protection */
+ #undef TRACE_INCLUDE_PATH
+-#define TRACE_INCLUDE_PATH .
++#define TRACE_INCLUDE_PATH ./gvt
+ #undef TRACE_INCLUDE_FILE
+ #define TRACE_INCLUDE_FILE trace
+ #include <trace/define_trace.h>
+diff --git a/drivers/gpu/drm/i915/i915_trace.h b/drivers/gpu/drm/i915/i915_trace.h
+index cce426b23..8f17f105f 100644
+--- a/drivers/gpu/drm/i915/i915_trace.h
++++ b/drivers/gpu/drm/i915/i915_trace.h
+@@ -987,5 +987,5 @@ DEFINE_EVENT(i915_context, i915_context_free,
+ 
+ /* This part must be outside protection */
+ #undef TRACE_INCLUDE_PATH
+-#define TRACE_INCLUDE_PATH ../../drivers/gpu/drm/i915
++#define TRACE_INCLUDE_PATH .
+ #include <trace/define_trace.h>
